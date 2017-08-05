@@ -15,16 +15,17 @@
 
 				<div class="panel-body" >
 					{!! $html->table(['class'=>'table-striped']) !!}
-				</div>
 
-			
-			
+					<div class="panel-body">
+						<p><a  class="btn btn-primary" href="{{ route('authors.create') }}">tambah</a></p>
+						{!! $html->table(['class'=>'table-striped'])!!}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-	@endsection
-
-				@section('scripts')
-				{!! $html->scripts() !!}
+@endsection
+	@section('scripts')
+	{!! $html->scripts() !!}
 @endsection

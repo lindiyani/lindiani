@@ -11,12 +11,12 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css" >
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/jquery.dataTables.css"  rel="stylesheet">
-    <link href="/css/dataTables.bootstrap.css" rel="stylesheet">
-</head>  
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/font-awesome.min.css') }}" rel='stylesheet' type='text/css'>
+    <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/jquery.dataTables.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+</head>
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
@@ -41,8 +41,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if (Auth::check())
-                        <li><a href="{{ url('/home') }}">Dashboard</a></li>
-                        <li><a href="{{ route('authors.index') }}">Penulis</a></li>
+                            <li><a href="{{ url('/home') }}">Dashboard</a></li>
+                            @role('admin')
+                             <li><a href="{{ route('authors.index') }}">Penulis</a></li>
+                            @endrole
                         @endif
                     </ul>
 
@@ -50,7 +52,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ url('/register') }}">Daftar</a></li>
                         @else
                             <li class="dropdown">
@@ -60,13 +62,13 @@
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
-                                        <a href="{{ url('/logout') }}"
+                                        <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
                                         </a>
 
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
@@ -77,15 +79,15 @@
                 </div>
             </div>
         </nav>
-
+        
         @yield('content')
     </div>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
-    <script type="/js/jquery.dataTables.min.js"></script>
-    <script type="/js/dataTables.bootstrap.min.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/js/dataTables.bootstrap.min.js') }}"></script>
+    
     @yield('scripts')
-
 </body>
 </html>

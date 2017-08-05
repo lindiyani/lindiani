@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Author;
-use App\Book;
 use Yajra\Datatables\Html\Builder;
 use Yajra\Datatables\Datatables;
 
@@ -26,9 +25,8 @@ class AuthorsController extends Controller
 
         $html = $htmlBuilder
             ->addColumn(['data'=>'name','name'=>'name','title'=>'Nama']);
-
             return view('authors.index')->with(compact('html'));
-        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -38,6 +36,7 @@ class AuthorsController extends Controller
     public function create()
     {
         //
+        return view('authors.create');
     }
 
     /**
@@ -49,6 +48,9 @@ class AuthorsController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,['name'=>'required|unique:authors']);
+        $author= Author::create($request->all());
+        return redirect()->route('authors.index');
     }
 
     /**
